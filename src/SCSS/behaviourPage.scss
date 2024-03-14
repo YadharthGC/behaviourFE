@@ -1,0 +1,190 @@
+#behaviourPage {
+  .behaviourImg {
+    width: 250px;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .allTableHead {
+    padding-top: 15px;
+    padding-right: 25px;
+    padding-left: 25px;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    border-bottom: solid 1px gray;
+    font-weight: bolder;
+  }
+  .imgTitle {
+    flex: 0.3;
+  }
+  .idTitle {
+    flex: 0.1;
+    text-align: center;
+  }
+  .personTitle {
+    flex: 0.2;
+    text-align: center;
+  }
+  .timeTitle {
+    flex: 0.2;
+    text-align: center;
+  }
+  .actionTitle {
+    flex: 0.2;
+    text-align: center;
+  }
+
+  .allTableBody {
+    height: 79vh;
+    overflow: scroll;
+    overflow-x: hidden;
+    border-bottom: solid 1px lightgray;
+  }
+
+  .allTableBody::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* Track */
+  .allTableBody::-webkit-scrollbar-track {
+    background: lightgray;
+  }
+
+  /* Handle */
+  .allTableBody::-webkit-scrollbar-thumb {
+    background: blue;
+    width: 7px;
+  }
+
+  .bodyPart {
+    padding-top: 5px;
+    padding-right: 25px;
+    padding-left: 25px;
+    padding-bottom: 5px;
+    display: flex;
+    align-items: center;
+    border-bottom: solid 1px gray;
+  }
+  .bodyPart:hover {
+    background-color: white;
+  }
+  .imgAns {
+    flex: 0.3;
+  }
+  .camAns {
+    flex: 0.1;
+    text-align: center;
+  }
+  .nameAns {
+    flex: 0.2;
+    text-align: center;
+  }
+  .timeAns {
+    flex: 0.2;
+    text-align: center;
+  }
+  .actionAns {
+    flex: 0.2;
+    text-align: center;
+  }
+  // .gridDiv {
+  //   padding: 0px 10px;
+  // }
+  // .notifications {
+  //   border: solid 1px black;
+  // }
+  // .bodyCon {
+  //   display: flex;
+  //   justify-content: space-between;
+  //   align-items: flex-start;
+  // }
+  // .accountGrp {
+  //   display: flex;
+  //   justify-content: space-between;
+  //   align-items: flex-start;
+  // }
+}
+.oneBehaviourPage {
+  .profileStudents {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 25px;
+    gap: 10px;
+  }
+  .partA {
+    flex: 0.4;
+  }
+  .partB {
+    flex: 0.6;
+  }
+  .proImg {
+    display: flex;
+    justify-content: flex-start;
+  }
+  .detailsA {
+    display: flex;
+    align-items: center;
+  }
+  .details {
+    padding: 10px;
+    border: solid 1px black;
+    border-radius: 10px;
+  }
+  .proDetail {
+    margin-top: 2%;
+  }
+  .infoTitle {
+    margin-bottom: 1%;
+  }
+  .objKey {
+    flex: 0.5;
+    text-align: start;
+  }
+  .objVal {
+    flex: 0.5;
+    text-align: start;
+  }
+  .activityDiv {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border: solid 1px black;
+    border-radius: 10px;
+    margin-bottom: 1%;
+  }
+  .activityTitle {
+    margin-bottom: 1%;
+  }
+  .statusActive {
+    color: green;
+    font-weight: 600;
+  }
+  .spanArea {
+    color: orange;
+    font-weight: 600;
+  }
+  .spanCam {
+    color: brown;
+    font-weight: 600;
+  }
+  .spanTime {
+    color: blue;
+    font-weight: 600;
+  }
+  .proAva {
+    display: flex;
+    align-items: center;
+  }
+  #proAvaImg {
+    font-size: 26px;
+  }
+  .proImg {
+    padding: 10px;
+    border: solid 1px black;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-radius: 10px;
+  }
+}
