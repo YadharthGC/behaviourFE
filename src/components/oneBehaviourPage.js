@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Avatar,
   Box,
@@ -14,10 +14,44 @@ import "../CSS/crowd.css";
 import { beSam } from "../calendarSample";
 import { useState } from "react";
 import Grid from "@mui/material/Grid";
+import axios from "axios";
+import { renderhost } from "../nodeLink";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function OneBehaviourPage() {
+  const [user, setUser] = useState("");
+  const [userAct, setUserAct] = useState([]);
   const admin = window.localStorage.getItem("admin");
   const adminID = window.localStorage.getItem("adminID");
+  const params = useParams();
+
+  useEffect(() => {
+    handleGetUser();
+    console.log(params["*"]);
+    let initialize = setInterval(handleGetUser, 3000);
+    if (!params["*"].includes("onebehaviour")) {
+      clearInterval(initialize);
+    }
+  }, []);
+
+  const handleGetUser = () => {
+    try {
+      console.log(params.id);
+      axios
+        .get(`${renderhost}/onebehave/${params.id}`, { admin, adminID })
+        .then((res) => {
+          console.log(res.data?.msg);
+          if (res.data?.msg?.activity) {
+            setUserAct(res.data?.msg?.activity);
+            setUser(res.data?.msg);
+          }
+          // setUser(res?.data?.all);
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="oneBehaviourPage">
@@ -35,11 +69,13 @@ export default function OneBehaviourPage() {
           <div className="partA">
             <div className="proImg">
               <div className="proAva">
-                <Avatar id="proAvaImg" />
+                <Avatar id="proAvaImg" src={user.photoa} />
               </div>
               <div className="proStatus">
-                <div className="proName">Hari Yadharth</div>
-                <div className="statusName">Active</div>
+                <div className="proName">{user.name}</div>
+                <div className="statusName">
+                  {userAct[0] ? userAct[0]?.status : ""}
+                </div>
               </div>
             </div>
             <div className="proDetail">
@@ -47,85 +83,41 @@ export default function OneBehaviourPage() {
               <div className="details">
                 <div className="detailsA">
                   <div className="objKey">Name</div>
-                  <div className="objVal">: Hari Yadharth GC</div>
+                  <div className="objVal">: {user.name}</div>
                 </div>
                 <div className="detailsA">
                   <div className="objKey">Gender</div>
-                  <div className="objVal">: Male</div>
+                  <div className="objVal">: {user.gender}</div>
                 </div>
                 <div className="detailsA">
                   <div className="objKey">DOB</div>
-                  <div className="objVal">: June 06,2000</div>
+                  <div className="objVal">: {user.dob}</div>
                 </div>
               </div>
             </div>
           </div>
           <div className="partB">
             <div className="activityTitle">Activity</div>
-            <div className="activityDiv">
-              <span className="bigA">
-                <Avatar alt={"h"} />
-              </span>
-              <span className="bigB">
-                Hari was &nbsp;
-                <span className="statusActive">active</span>, eating in the{" "}
-                &nbsp;<span className="spanArea">dinning area</span>, recorded
-                by camId &nbsp;<span className="spanCam">3456</span> &nbsp;at
-                &nbsp;
-                <span className="spanTime">3:05 pm.</span>
-              </span>
-            </div>
-            <div className="activityDiv">
-              <span className="bigA">
-                <Avatar alt={"h"} />
-              </span>
-              <span className="bigB">
-                Hari was &nbsp;
-                <span className="statusActive">active</span>, studying in the{" "}
-                &nbsp;<span className="spanArea">study room</span>, recorded by
-                camId &nbsp;<span className="spanCam">3456</span> &nbsp;at
-                &nbsp;
-                <span className="spanTime">3:05 pm.</span>
-              </span>
-            </div>
-            <div className="activityDiv">
-              <span className="bigA">
-                <Avatar alt={"h"} />
-              </span>
-              <span className="bigB">
-                Hari was &nbsp;
-                <span className="statusActive">inactive</span>, sleeping in the{" "}
-                &nbsp;<span className="spanArea">study room</span>, recorded by
-                camId &nbsp;<span className="spanCam">3456</span> &nbsp;at
-                &nbsp;
-                <span className="spanTime">3:05 pm.</span>
-              </span>
-            </div>
-            <div className="activityDiv">
-              <span className="bigA">
-                <Avatar alt={"h"} />
-              </span>
-              <span className="bigB">
-                Hari was &nbsp;
-                <span className="statusActive">inactive</span>, sitting in the{" "}
-                &nbsp;<span className="spanArea">bench</span>, recorded by camId
-                &nbsp;<span className="spanCam">3456</span> &nbsp;at &nbsp;
-                <span className="spanTime">3:05 pm.</span>
-              </span>
-            </div>
-            <div className="activityDiv">
-              <span className="bigA">
-                <Avatar alt={"h"} />
-              </span>
-              <span className="bigB">
-                Hari was &nbsp;
-                <span className="statusActive">active</span>, running in the{" "}
-                &nbsp;<span className="spanArea">hall area</span>, recorded by
-                camId &nbsp;<span className="spanCam">3456</span> &nbsp;at
-                &nbsp;
-                <span className="spanTime">3:05 pm.</span>
-              </span>
-            </div>
+            {userAct.length &&
+              userAct.map((data) => {
+                return (
+                  <div className="activityDiv">
+                    <span className="bigA">
+                      <Avatar alt={"h"} src={user.photoa} />
+                    </span>
+                    <span className="bigB">
+                      {user.name} was &nbsp;
+                      <span className="statusActive">{data.status}</span>,
+                      {data.activitycur} in the &nbsp;
+                      <span className="spanArea">{data.area}</span>, recorded by
+                      camId &nbsp;
+                      <span className="spanCam">{data.cam}</span> &nbsp;at
+                      &nbsp;
+                      <span className="spanTime">{data.time}</span>
+                    </span>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Avatar,
   Box,
@@ -14,11 +14,42 @@ import "../CSS/crowd.css";
 import { beSam } from "../calendarSample";
 import { useState } from "react";
 import Grid from "@mui/material/Grid";
+import axios from "axios";
+import { renderhost } from "../nodeLink";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function BehaviourPage() {
-  const [user, setUser] = useState(beSam);
+  const [user, setUser] = useState([]);
   const admin = window.localStorage.getItem("admin");
   const adminID = window.localStorage.getItem("adminID");
+  const navigate = useNavigate();
+  const params = useParams();
+
+  useEffect(() => {
+    console.log(params);
+    handleGetUsers();
+    let initialize = setInterval(handleGetUsers, 3000);
+    if (
+      !params["*"].includes("behaviour") ||
+      params["*"].includes("onebehaviour")
+    ) {
+      clearInterval(initialize);
+    }
+  }, []);
+
+  const handleGetUsers = () => {
+    try {
+      axios
+        .get(`${renderhost}/behave`, { admin, adminID })
+        .then((res) => {
+          console.log(res.data);
+          setUser(res?.data?.all);
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // "SittingInChair&Active", "Bitting", "Fighting", "Running", "SittingInChair&IN-Active", "HandFlapping
 
   return (
@@ -52,7 +83,35 @@ export default function BehaviourPage() {
             <div className="actionTitle">Action</div>
           </div>
           <div className="allTableBody">
-            {user.map((data) => {
+            {user.length &&
+              user.map((data) => {
+                return (
+                  <div
+                    className="bodyPart"
+                    onClick={() => {
+                      navigate(`../onebehaviour/${data._id}`);
+                    }}
+                  >
+                    <div className="imgAns">
+                      <img
+                        alt={"none"}
+                        src={data.photoa}
+                        className="entryUserImg crowd"
+                        onClick={() => {}}
+                      />
+                    </div>
+                    <div className="camAns">{data?.activity[0].cam}</div>
+                    <div className="nameAns">{data.name}</div>
+                    <div className="timeAns">
+                      <div>{data?.activity[0].cam}</div>
+                      <div>2024-12-12</div>
+                    </div>
+
+                    <div className="actionAns">{data?.activity[0].status}</div>
+                  </div>
+                );
+              })}
+            {/* {user.map((data) => {
               return (
                 <div className="bodyPart">
                   <div className="imgAns">
@@ -73,7 +132,7 @@ export default function BehaviourPage() {
                   <div className="actionAns">Active</div>
                 </div>
               );
-            })}
+            })} */}
           </div>
         </div>
         {/* <div className="gridDiv">

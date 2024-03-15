@@ -463,7 +463,10 @@ export default function FileArea() {
                 <Route path="/crowd" element={<CrowdSection />} />
                 <Route path="/heatmap" element={<HeatMapPage />} />
                 <Route path="/behaviour" element={<BehaviourPage />} />
-                <Route path="/onebehaviour" element={<OneBehaviourPage />} />
+                <Route
+                  path="/onebehaviour/:id"
+                  element={<OneBehaviourPage />}
+                />
               </Routes>
               <div>
                 {/* <Button onClick={handleOpen}>Open modal</Button> */}
