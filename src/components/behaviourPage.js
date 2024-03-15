@@ -29,12 +29,13 @@ export default function BehaviourPage() {
     console.log(params);
     handleGetUsers();
     let initialize = setInterval(handleGetUsers, 3000);
-    if (
-      !params["*"].includes("behaviour") ||
-      params["*"].includes("onebehaviour")
-    ) {
-      clearInterval(initialize);
-    }
+    // if (
+    //   !params["*"].includes("behaviour") ||
+    //   params["*"].includes("onebehaviour")
+    // ) {
+    //   clearInterval(initialize);
+    // }
+    return () => clearInterval(initialize);
   }, []);
 
   const handleGetUsers = () => {

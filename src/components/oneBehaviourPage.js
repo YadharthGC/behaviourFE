@@ -29,9 +29,11 @@ export default function OneBehaviourPage() {
     handleGetUser();
     console.log(params["*"]);
     let initialize = setInterval(handleGetUser, 3000);
-    if (!params["*"].includes("onebehaviour")) {
+    // if (!params["*"].includes("onebehaviour")) {
+    return () => {
       clearInterval(initialize);
-    }
+    };
+    // }
   }, []);
 
   const handleGetUser = () => {
